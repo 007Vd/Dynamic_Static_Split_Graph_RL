@@ -2,3 +2,6 @@ Commit 1: doenloadee the OHCLV data for req stocks, Formeulated the raw presenat
 
 next task: complete the static graph representaion, and the final tensors passed over the PPO model
 
+Commit 2: Final Input representaion for PPO Model ready
+
+next task: start forming the PPO model
