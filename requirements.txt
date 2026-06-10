@@ -1,0 +1,13 @@
+numpy
+pandas
+matplotlib
+torch
+scikit-learn
+scipy
+yfinance
+requests
+beautifulsoup4
+tqdm
+sentence-transformers
+Path
+torch_geometric
