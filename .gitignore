@@ -6,7 +6,7 @@ src/models/__pycache__/
 checkpoints/
 src/rl/__pycache__/
 data/company_info
-data/graphs
+
 
 data/processed
 data/raw
