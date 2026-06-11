@@ -44,30 +44,3 @@ if __name__=="__main__":
         print(f"{ds} static graph constructed and saved")
         print(f"Saved -> {SAVE_PATH}")
 
-# %%
-graph = torch.load("/Users/007vd/Downloads/DAU/dgdrl_paper/data/graphs/dow30/static_graph.pt")
-
-edge_index = graph["edge_index"]
-print(edge_index.shape[1])
-degrees = torch.zeros(29)
-
-for dst in edge_index[1]:
-    degrees[dst] += 1
-
-print("isolated nodes:", (degrees==0).sum())
-print("min degree:", degrees.min())
-print("max degree:", degrees.max())
-print("avg degree:", degrees.mean())
-# %%
-graph = torch.load("/Users/007vd/Downloads/DAU/dgdrl_paper/data/graphs/sse50/static_graph.pt")
-
-edge_index = graph["edge_index"]
-print(edge_index.shape[1])
-
-# %%
-graph = torch.load("/Users/007vd/Downloads/DAU/dgdrl_paper/data/graphs/ndx100/static_graph.pt")
-
-edge_index = graph["edge_index"]
-print(edge_index.shape[1])
-
-# %%

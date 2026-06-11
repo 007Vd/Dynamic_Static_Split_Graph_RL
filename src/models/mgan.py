@@ -1,7 +1,7 @@
 #%%
 import torch
 import torch.nn as nn
-from tga_head import TgaHead
+from src.models.tga_head import TgaHead
 from pathlib import Path
 class DynamicMGAN(nn.Module):
     def __init__(self,hidden_dim=128,num_heads=8,d_att=512):
@@ -9,12 +9,10 @@ class DynamicMGAN(nn.Module):
         self.hidden_dim=hidden_dim
         self.num_heads=num_heads
         self.d_att=d_att
-        print("Creating heads...")
         self.heads=nn.ModuleList([
             TgaHead(hidden_dim)
             for _ in range(num_heads)
         ])
-        print("Heads created")
         self.W_d_o=nn.Linear(hidden_dim*num_heads,d_att)
     
     def forward(self,x,edge_index):
@@ -32,15 +30,6 @@ class DynamicMGAN(nn.Module):
         return E_d,attention_maps
     
 
-# %%
-model=DynamicMGAN()
-x=torch.randn(29,128)
-DIR=Path("/Users/007vd/Downloads/DAU/dgdrl_paper/data/graphs/dow30/dynamic_graphs.pt")
-graphs=torch.load(DIR)
-graph=graphs[0]
-E_d,attn=model(x,graph["edge_index"])
-
-print(E_d.shape)
 
 # %%
 class StaticMGAN(nn.Module):
@@ -73,13 +62,4 @@ class StaticMGAN(nn.Module):
         return E_s,attention_maps
     
 
-# %%
-model=StaticMGAN()
-x=torch.randn(29,128)
-DIR=Path("/Users/007vd/Downloads/DAU/dgdrl_paper/data/graphs/dow30/dynamic_graphs.pt")
-graphs=torch.load(DIR)
-graph=graphs[0]
-E_s,attn=model(x,graph["edge_index"])
 
-print(E_s.shape)
-# %%
