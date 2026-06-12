@@ -30,7 +30,7 @@ class Actor(nn.Module):
         scores = scores.squeeze(-1)
 
         # Dirichlet concentration parameters
-        alpha = F.softplus(scores) + 1.0
+        alpha = F.softplus(scores) + 0.01
 
         dist = Dirichlet(alpha)
 

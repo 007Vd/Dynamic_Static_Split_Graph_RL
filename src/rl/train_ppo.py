@@ -26,7 +26,7 @@ from src.rl.buffer import RolloutBuffer
 from src.rl.portfolio_env import PortfolioEnv
 
 # %%  ── Config ──────────────────────────────────────────────────────────────
-DATASET   = "ndx100"           # "dow30" | "ndx100" | "sse50"
+DATASET   = "dow30"           # "dow30" | "ndx100" | "sse50"
 MAX_EPOCHS = 50           # hard ceiling — should never be reached
 PATIENCE   = 20         # stop if val Sharpe doesn't improve for this many epochs
 VAL_FRAC   = 0.1              # fraction of training data held out for validation
@@ -319,7 +319,6 @@ weight_min = mean_weights.min()
 
 weight_max = mean_weights.max()
 
-# %%
 equal_rewards = []
 
 N = y_test.shape[1]
@@ -357,7 +356,6 @@ equal_max_dd = compute_max_drawdown(
     equal_rewards
 )
 
-#%%
 print("\n================ DGDRL TEST =================")
 
 print(f"Sharpe Ratio : {test_sharpe:.4f}")
