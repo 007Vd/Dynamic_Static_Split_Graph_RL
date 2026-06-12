@@ -26,9 +26,9 @@ from src.rl.buffer import RolloutBuffer
 from src.rl.portfolio_env import PortfolioEnv
 
 # %%  ── Config ──────────────────────────────────────────────────────────────
-DATASET   = "dow30"           # "dow30" | "ndx100" | "sse50"
-MAX_EPOCHS = 200           # hard ceiling — should never be reached
-PATIENCE   = 25           # stop if val Sharpe doesn't improve for this many epochs
+DATASET   = "ndx100"           # "dow30" | "ndx100" | "sse50"
+MAX_EPOCHS = 50           # hard ceiling — should never be reached
+PATIENCE   = 20         # stop if val Sharpe doesn't improve for this many epochs
 VAL_FRAC   = 0.1              # fraction of training data held out for validation
 SAVE_PATH  = PROJECT_ROOT / f"checkpoints/{DATASET}_best.pt"
 SAVE_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -216,13 +216,7 @@ for epoch in range(1, MAX_EPOCHS + 1):
 
 else:
     print(f"\nReached MAX_EPOCHS ({MAX_EPOCHS}). Best val Sharpe: {best_val_sharpe:+.4f}")
-# %%
-torch.save({
-    "epoch": epoch,
-    "model_state": model.state_dict(),
-    "val_sharpe": val_sharpe,
-    "train_sharpe": train_sharpe,
-}, PROJECT_ROOT / f"checkpoints/{DATASET}_best.pt")
+ # %%
 # testing
 def compute_sharpe(rewards, annualisation=252):
     r = np.array(rewards, dtype=np.float64)
@@ -251,7 +245,7 @@ def compute_max_drawdown(returns):
     return drawdowns.min()
 
 checkpoint = torch.load(
-    PROJECT_ROOT / f"checkpoints/{DATASET}_final.pt",
+    PROJECT_ROOT / f"checkpoints/{DATASET}_best.pt",
     map_location="cpu"
 )
 
@@ -276,8 +270,8 @@ with torch.no_grad():
     for t in range(len(X_test)):
 
         weights, _, _, _ = model(
-    X_val[t].to(device),
-    g_val[t]["edge_index"].to(device),
+    X_test[t].to(device),
+    g_test[t]["edge_index"].to(device),
     static_graph["edge_index"].to(device),
 )
 
